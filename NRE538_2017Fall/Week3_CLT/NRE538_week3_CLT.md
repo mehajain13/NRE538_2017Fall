@@ -158,7 +158,7 @@ However, if the survey data is not a normal distribution, we can NOT use standar
 
 - [standard error (SE)](https://en.wikipedia.org/wiki/Standard_error): standard deviation of a statistic (e.g. mean). This is very different from the standard deviation of sample!  
 
-- [confidence interval (CI)](https://en.wikipedia.org/wiki/Confidence_interval): the interval within which a statistic is expected to be observed. For example, "95% confidence interval of a statistic is X to Y" means that, if the __model is good enough__ and __a valid procedures__ is being used, we are 95% confident that the true value of the statistic is in X to Y. Upper/lower limit of 95% CI of a statistic is the mean of that statistic plus/minus $r qnorm(0.975)$ SE. [Why?](https://en.wikipedia.org/wiki/1.96)
+- [confidence interval (CI)](https://en.wikipedia.org/wiki/Confidence_interval): the interval within which a statistic is expected to be observed. For example, "95% confidence interval of a statistic is X to Y" means that, if the __model is good enough__ and __a valid procedures__ is being used, we are 95% confident that the true value of the statistic is in X to Y. Upper/lower limit of 95% CI of the normal distribution mean is the mean plus/minus 1.959964 SE of the mean. [Why?](https://en.wikipedia.org/wiki/1.96)
 
 I'll use the batting average data to demonstrate you the relationship between SE and CI. 
 
@@ -166,6 +166,7 @@ First we load the data and plot its distribution.
 
 
 ```r
+library(Lahman)
 data(Batting)
 bat15 = subset(Batting, yearID==2015 & AB>200)
 bat15$avg = bat15$H/bat15$AB
@@ -193,22 +194,40 @@ qqnorm(bat15$avg); qqline(bat15$avg, col="Red")
 
 ![](NRE538_week3_CLT_files/figure-html/unnamed-chunk-2-2.png)<!-- -->
 
-As this data follows normal distribution pretty well, so we can use SE of the mean to calculate the CI of the mean. The standard error of mean can be calculated as $\frac{SD}{n}$, where _SD_ is the standard deviation and _n_ is sample size. The CI of the mean is plus/minus $r qnorm(0.975)$ SE. 
+As this data follows normal distribution pretty well, so we can use SE of the mean to calculate the CI of the mean. The standard error of mean can be calculated as $\frac{SD}{\sqrt{n}}$, where _SD_ is the standard deviation and _n_ is sample size. The CI of the mean is plus/minus 1.959964 SE. 
 
 
 ```
-## [1] "standard error calculated base on the central limit theorm = 0.00165"
+## [1] "standard error = 0.00165"
 ```
 
 ```
-## [1] "95% confidence interval base on the central limit theorm : 0.2579 - 0.2644"
+## [1] "95% confidence interval : 0.2579 - 0.2644"
 ```
 
-2. By resampling method. This method is great as it is applicable to all kinds of sample distributions.
+Or, we can calculate CI by resampling method. This method is great as it is applicable to all kinds of sample distributions.
 
+
+```r
+set.seed(61)
+avg.m=c()
+for (i in 1:10000){
+  avg.m[i]=mean(sample(bat15$avg, length(bat15$avg), replace=TRUE))
+}
+
+mean.resamp=mean(avg.m)
+mean.SE.resamp=sd(avg.m)
+mean.CI.resamp=c(sort(avg.m)[10000*0.025], sort(avg.m)[10000*0.975])
+print(paste0("standard error calculated by resampling = ", round(mean.SE.resamp,5)))
+```
 
 ```
 ## [1] "standard error calculated by resampling = 0.00166"
+```
+
+```r
+print(paste0("95% confidence interval by resampling : ", 
+             round(sort(avg.m)[10000*0.025],4), " - ", round(sort(avg.m)[10000*0.975],4)))
 ```
 
 ```
@@ -222,5 +241,3 @@ How do they look on a figure?
 ![](NRE538_week3_CLT_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 With the concept of SE and CI in mind, We can dig into the rational of comparing the mean of two sample in more detail.  
-
-> To test if two population means are significantly different from each other at 5% significance level (the $\alpha$ value determined by us), we need to know if the 95% confidence level of the difference between the two population means overlaps 0. If yes, then the two population means are significantly different at 5% significance level. There are multiple ways to calculate the the 95% confidence level.
