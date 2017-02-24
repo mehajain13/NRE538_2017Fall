@@ -331,8 +331,8 @@ Again, the two p-values are slightly off because the two samples are not perfect
 
 __Exercise 2__
 
-Calculate the p-value of rejecting the following null hypothesis:
-$H_0$: The murder rate of Washington state is significnatly different from that of Minnesota state. 
+Calculate the p-value of rejecting the following null hypothesis (You are not allowed to use `t.test()` function or the formula of t-test we learned in the class):  
+$H_0$: The murder rate of Washington state and murder rate of Minnesota state are not different from each other. 
 
 ```{r, include=FALSE}
 dif.g=c() 
