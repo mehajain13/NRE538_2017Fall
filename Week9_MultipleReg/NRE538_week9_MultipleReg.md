@@ -108,6 +108,7 @@ summary(lm(Y~X1, data=df))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
+<<<<<<< HEAD
 ## -2.60032 -1.01432 -0.07375  1.04872  2.11966 
 ## 
 ## Coefficients:
@@ -120,6 +121,20 @@ summary(lm(Y~X1, data=df))
 ## Residual standard error: 1.279 on 199 degrees of freedom
 ## Multiple R-squared:  0.9519,	Adjusted R-squared:  0.9516 
 ## F-statistic:  3937 on 1 and 199 DF,  p-value: < 2.2e-16
+=======
+## -2.36757 -1.04543 -0.04365  1.05653  2.40081 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  -1.5098     0.2082   -7.25 9.03e-12 ***
+## X1            2.9310     0.0476   61.58  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.302 on 199 degrees of freedom
+## Multiple R-squared:  0.9501,	Adjusted R-squared:  0.9499 
+## F-statistic:  3792 on 1 and 199 DF,  p-value: < 2.2e-16
+>>>>>>> origin/master
 ```
 
 ```r
@@ -133,6 +148,7 @@ summary(lm(Y~X2, data=df))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
+<<<<<<< HEAD
 ## -1.61715 -0.72480  0.04409  0.74314  1.58877 
 ## 
 ## Coefficients:
@@ -145,6 +161,20 @@ summary(lm(Y~X2, data=df))
 ## Residual standard error: 0.8771 on 199 degrees of freedom
 ## Multiple R-squared:  0.9774,	Adjusted R-squared:  0.9773 
 ## F-statistic:  8598 on 1 and 199 DF,  p-value: < 2.2e-16
+=======
+## -1.65469 -0.77243  0.00939  0.73881  1.72681 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5.12819    0.17438  -29.41   <2e-16 ***
+## X2           1.94296    0.02094   92.78   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.8765 on 199 degrees of freedom
+## Multiple R-squared:  0.9774,	Adjusted R-squared:  0.9773 
+## F-statistic:  8609 on 1 and 199 DF,  p-value: < 2.2e-16
+>>>>>>> origin/master
 ```
 
 So far so good. But if we what to have both $X_1$ and $X_2$ in the linear regression model, the regression coefficients for both $X_1$ and $X_2$ are way off the true values. This is because $X_1$ and $X_2$ are highly correlated, which we can see from the correlation plot the correlation coefficient between $X_1$ and $X_2$. 
@@ -161,6 +191,7 @@ summary(lm(Y~X1+X2, data=df))
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
+<<<<<<< HEAD
 ## -1.50123 -0.44709 -0.05838  0.44928  1.48399 
 ## 
 ## Coefficients:
@@ -174,6 +205,21 @@ summary(lm(Y~X1+X2, data=df))
 ## Residual standard error: 0.6686 on 198 degrees of freedom
 ## Multiple R-squared:  0.9869,	Adjusted R-squared:  0.9868 
 ## F-statistic:  7469 on 2 and 198 DF,  p-value: < 2.2e-16
+=======
+## -1.54208 -0.57082  0.02761  0.56603  1.56376 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -4.21722    0.17501 -24.097   <2e-16 ***
+## X1           0.93384    0.09967   9.369   <2e-16 ***
+## X2           1.35499    0.06515  20.799   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.7314 on 198 degrees of freedom
+## Multiple R-squared:  0.9843,	Adjusted R-squared:  0.9842 
+## F-statistic:  6225 on 2 and 198 DF,  p-value: < 2.2e-16
+>>>>>>> origin/master
 ```
 
 ```r
@@ -187,7 +233,11 @@ cor(X1, X2)
 ```
 
 ```
+<<<<<<< HEAD
 ## [1] 0.9588077
+=======
+## [1] 0.9633513
+>>>>>>> origin/master
 ```
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -221,10 +271,17 @@ cor(df)
 ```
 
 ```
+<<<<<<< HEAD
 ##              y          x1          x2
 ## y   1.00000000 -0.01801595 -0.01801595
 ## x1 -0.01801595  1.00000000  1.00000000
 ## x2 -0.01801595  1.00000000  1.00000000
+=======
+##            y        x1        x2
+## y  1.0000000 0.1248911 0.1248911
+## x1 0.1248911 1.0000000 1.0000000
+## x2 0.1248911 1.0000000 1.0000000
+>>>>>>> origin/master
 ```
 
 
@@ -233,7 +290,11 @@ We can see that when x1 and x2 are perfectly correlated, regression coefficients
 
 Another more formal way to diagnose how the magnitude of collinearity among explanatory variables is the [variance inflation factor (VIF)](https://en.wikipedia.org/wiki/Variance_inflation_factor).  
 
+<<<<<<< HEAD
 $$VIF_i = \frac{1}{1 -{R_i}^2}$$, where ${R_i}^2$ is the ${R}^2$ of the linear model with ${X_i}$ being the response variable (i.e. at the left side of the equation) and the other ${X_s}$ being the explanatory variables (at the right hand side of the equation).  
+=======
+$$VIF_i = 1 - \frac{1} {{R_i}^2}$$, where ${R_i}^2$ is the ${R}^2$ of the linear model with ${X_i}$ being the response variable (i.e. at the left side of the equation) and the other ${X_s}$ being the explanatory variables (at the right hand side of the equation).  
+>>>>>>> origin/master
 To the best of my knowledge, there is no built-in funciton that allows us to calculate VIF automatically, so we'll have to write our own...In fact, it's not hard to write. For example the VIF for radiation can be calculated as follow. 
 
 
