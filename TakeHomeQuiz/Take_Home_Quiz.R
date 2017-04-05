@@ -5,6 +5,8 @@ library(fmsb)
 edata=read.csv('/Users/mehajain/Desktop/energy_data.csv')
 edata=mutate(edata,TotalEnergypc=TotalEnergy/Population,TotalGDPpc=TotalGDP/Population,TotalCoalpc=TotalCoal/Population)
 
+### if the per capita calculation is wrong, take 1 pt once and 2 pt at most. 
+
 ####################################################
 ################ T TEST SECTION ####################
 ####################################################
@@ -15,8 +17,10 @@ edata=mutate(edata,TotalEnergypc=TotalEnergy/Population,TotalGDPpc=TotalGDP/Popu
 boxplot(TotalEnergypc~Coast,data=edata)
 # c. check assumptions
 # check for equal variances - yes equal
+shapiro.test()
 var.test(TotalEnergypc~Coast,data=edata)
 # d. run t-test with equal variances - no difference
+### reason must be stated. 
 t.test(TotalEnergypc~Coast,var.equal=TRUE,data=edata)
 
 ##### Q2. Does per capita coal consumption vary based on whether the state is on a coast or not?
@@ -43,7 +47,7 @@ leveneTest(TotalGDPpc~Region,data=edata)
 # d. run anova
 anova(aov(TotalGDPpc~Region,data=edata))
 
-#### Q4. Does GDP per capita vary by region?
+###### Q. Does GDP per capita vary by region?
 # a. write null and alternate hypothesis
 # b. make visual
 boxplot(TotalCoalpc~Region,data=edata)
@@ -52,26 +56,27 @@ boxplot(TotalCoalpc~Region,data=edata)
 leveneTest(TotalCoalpc~Region,data=edata)
 # d. run anova
 anova(aov(TotalCoalpc~Region,data=edata))
+###### Q. Does GDP per capita vary by region?
 
-#### Q5. What is the correlation between energy use per capita and GDP? Does it seem like a strong correlation?
+#### Q4. What is the correlation between energy use per capita and GDP? Does it seem like a strong correlation?
 cor(edata$TotalGDPpc,edata$TotalCoalpc)
 
 #### HOUSING DATA
 house=read.csv('/Users/mehajain/Desktop/housingdata.csv')
-house=na.omit(house)
+house=na.omit(hdata)
 
-#### Q6 look at correlations + pick non-correlated model
+#### Q5 look at correlations + pick non-correlated model
 cor(house,house)
 model=lm(medv~nox+rm+crim,data=house)
 VIF(model) # not too correlated 
 
-#### Q7 look at visual plots of the relationships and state what they are
+#### Q6 look at visual plots of the relationships and state what they are
 par(mfrow=c(2,2))
 plot(medv~nox,data=house)
 plot(medv~rm,data=house)
 plot(medv~crim,data=house)
 
-#### Q8 check the assumptions of your model
+#### Q7 check the assumptions of your model
 plot(model) # looks like the values are not entirely normal and there may be some problems with heteroscedasticity
 
 #### Q9 Interpret model results
