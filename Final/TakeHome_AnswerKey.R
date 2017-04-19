@@ -3,10 +3,14 @@ library(fivethirtyeight)
 library(car)
 
 # load in datasets
-flying = read.csv('/Users/mehajain/Desktop/flying.csv')
-college = read.csv('/Users/mehajain/Desktop/college.csv')
-happy = read.csv('/Users/mehajain/Desktop/happy.csv')
-cancer = read.csv('/Users/mehajain/Desktop/cancer.csv')
+flying = read.table(file="https://raw.githubusercontent.com/OscarFHC/NRE538_2017Fall/master/Final/flying.csv", 
+                    header=TRUE, sep=",")
+college = read.table(file="https://raw.githubusercontent.com/OscarFHC/NRE538_2017Fall/master/Final/college.csv", 
+                     header=TRUE, sep=",")
+happy = read.table(file="https://github.com/OscarFHC/NRE538_2017Fall/blob/master/Final/happy.csv", 
+                   header=TRUE, sep=",")
+cancer = read.table(file="https://raw.githubusercontent.com/OscarFHC/NRE538_2017Fall/master/Final/cancer.csv", 
+                    header=TRUE, sep=",")
 
 # Q1 chi-square - flying
 chisq.test(flying$gender,flying$unruly_child)
